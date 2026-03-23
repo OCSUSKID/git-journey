@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loan Calculator</title>
+  <link rel="stylesheet" href="loan.css" />
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="loan.html" class="nav-logo">💰 LoanCalc</a>
+      <ul class="nav-links">
+        <li><a href="#calculator">Calculator</a></li>
+        <li><a href="#summary">Summary</a></li>
+        <li><a href="#amortization">Schedule</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <p class="hero-greeting">Smart &amp; Simple</p>
+      <h1 class="hero-name">Loan Calculator</h1>
+      <p class="hero-bio">
+        Enter your loan details below to instantly see your monthly payment,
+        total interest, and a full amortization schedule.
+      </p>
+      <a href="#calculator" class="btn btn-primary">Get Started</a>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll Down</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- Calculator Inputs -->
+  <section class="section" id="calculator">
+    <div class="container">
+      <h2 class="section-title">Enter Loan <span>Details</span></h2>
+      <div class="calc-grid">
+
+        <div class="calc-form card">
+          <!-- Loan Amount -->
+          <div class="field-group">
+            <div class="field-header">
+              <label for="loan-amount">Loan Amount</label>
+              <span class="field-value" id="amount-display">$10,000</span>
+            </div>
+            <input
+              type="range"
+              id="loan-amount"
+              min="1000"
+              max="1000000"
+              step="1000"
+              value="10000"
+              aria-label="Loan amount"
+            />
+            <div class="range-limits"><span>$1,000</span><span>$1,000,000</span></div>
+            <input
+              type="number"
+              id="loan-amount-num"
+              min="1000"
+              max="1000000"
+              step="100"
+              value="10000"
+              placeholder="Enter amount"
+              aria-label="Loan amount text input"
+            />
+          </div>
+
+          <!-- Annual Interest Rate -->
+          <div class="field-group">
+            <div class="field-header">
+              <label for="interest-rate">Annual Interest Rate</label>
+              <span class="field-value" id="rate-display">5.0%</span>
+            </div>
+            <input
+              type="range"
+              id="interest-rate"
+              min="0.1"
+              max="30"
+              step="0.1"
+              value="5"
+              aria-label="Annual interest rate"
+            />
+            <div class="range-limits"><span>0.1%</span><span>30%</span></div>
+            <input
+              type="number"
+              id="interest-rate-num"
+              min="0.1"
+              max="30"
+              step="0.1"
+              value="5"
+              placeholder="Enter rate"
+              aria-label="Annual interest rate text input"
+            />
+          </div>
+
+          <!-- Loan Term -->
+          <div class="field-group">
+            <div class="field-header">
+              <label for="loan-term">Loan Term</label>
+              <span class="field-value" id="term-display">5 years</span>
+            </div>
+            <input
+              type="range"
+              id="loan-term"
+              min="1"
+              max="30"
+              step="1"
+              value="5"
+              aria-label="Loan term in years"
+            />
+            <div class="range-limits"><span>1 yr</span><span>30 yrs</span></div>
+            <input
+              type="number"
+              id="loan-term-num"
+              min="1"
+              max="30"
+              step="1"
+              value="5"
+              placeholder="Enter years"
+              aria-label="Loan term text input"
+            />
+          </div>
+
+          <button class="btn btn-primary btn-full" id="calculate-btn">Calculate</button>
+          <p class="calc-error" id="calc-error" role="alert"></p>
+        </div>
+
+        <!-- Donut Chart -->
+        <div class="chart-wrapper card">
+          <svg class="donut" viewBox="0 0 200 200" id="donut-svg" aria-hidden="true">
+            <circle class="donut-track"   cx="100" cy="100" r="75" />
+            <circle class="donut-segment donut-principal" cx="100" cy="100" r="75"
+                    id="donut-principal" />
+            <circle class="donut-segment donut-interest"  cx="100" cy="100" r="75"
+                    id="donut-interest" />
+            <text class="donut-label-top" x="100" y="93" text-anchor="middle"
+                  id="donut-monthly">—</text>
+            <text class="donut-label-sub" x="100" y="113" text-anchor="middle">/month</text>
+          </svg>
+          <div class="chart-legend">
+            <div class="legend-item">
+              <span class="legend-dot dot-principal"></span>Principal
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot dot-interest"></span>Interest
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Summary Cards -->
+  <section class="section section-alt" id="summary">
+    <div class="container">
+      <h2 class="section-title">Loan <span>Summary</span></h2>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-icon">📅</div>
+          <div class="summary-label">Monthly Payment</div>
+          <div class="summary-value" id="monthly-payment">—</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-icon">💵</div>
+          <div class="summary-label">Total Payment</div>
+          <div class="summary-value" id="total-payment">—</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-icon">📈</div>
+          <div class="summary-label">Total Interest</div>
+          <div class="summary-value" id="total-interest">—</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-icon">🏦</div>
+          <div class="summary-label">Principal Amount</div>
+          <div class="summary-value" id="principal-amount">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Amortization Schedule -->
+  <section class="section" id="amortization">
+    <div class="container">
+      <h2 class="section-title">Amortization <span>Schedule</span></h2>
+      <p class="table-hint">Showing yearly breakdown. Calculate first to populate this table.</p>
+      <div class="table-wrapper">
+        <table class="amort-table" id="amort-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Opening Balance</th>
+              <th>Principal Paid</th>
+              <th>Interest Paid</th>
+              <th>Closing Balance</th>
+            </tr>
+          </thead>
+          <tbody id="amort-body">
+            <tr>
+              <td colspan="5" class="empty-row">No data yet — enter your loan details and click Calculate.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> LoanCalc · For illustrative purposes only.</p>
+    </div>
+  </footer>
+
+  <script src="loan.js"></script>
+</body>
+</html>
