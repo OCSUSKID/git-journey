@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chess – Play with Friends</title>
+  <link rel="stylesheet" href="chess.css" />
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="chess-header">
+    <a href="index.html" class="back-link">← Portfolio</a>
+    <h1 class="chess-title">♟ Chess</h1>
+    <span class="chess-subtitle">Two-Player Local</span>
+  </header>
+
+  <!-- Main layout -->
+  <main class="chess-main">
+
+    <!-- Left panel: Player info + move history -->
+    <aside class="panel panel-left">
+      <div class="player-card player-black" id="player-black">
+        <div class="player-avatar">♚</div>
+        <div class="player-info">
+          <span class="player-name">Black</span>
+          <span class="player-label">Player 2</span>
+        </div>
+        <div class="captured-pieces" id="captured-black"></div>
+        <div class="turn-indicator" id="turn-black"></div>
+      </div>
+
+      <div class="move-log-wrap">
+        <h3 class="panel-heading">Move Log</h3>
+        <ol class="move-log" id="move-log"></ol>
+      </div>
+
+      <div class="player-card player-white" id="player-white">
+        <div class="player-avatar">♔</div>
+        <div class="player-info">
+          <span class="player-name">White</span>
+          <span class="player-label">Player 1</span>
+        </div>
+        <div class="captured-pieces" id="captured-white"></div>
+        <div class="turn-indicator" id="turn-white"></div>
+      </div>
+    </aside>
+
+    <!-- Board area -->
+    <section class="board-area">
+      <div class="board-frame">
+        <!-- Rank labels (left) -->
+        <div class="rank-labels">
+          <span>8</span><span>7</span><span>6</span><span>5</span>
+          <span>4</span><span>3</span><span>2</span><span>1</span>
+        </div>
+
+        <!-- The board itself -->
+        <div class="board" id="board" role="grid" aria-label="Chess board"></div>
+
+        <!-- Rank labels (right) -->
+        <div class="rank-labels">
+          <span>8</span><span>7</span><span>6</span><span>5</span>
+          <span>4</span><span>3</span><span>2</span><span>1</span>
+        </div>
+      </div>
+
+      <!-- File labels -->
+      <div class="file-labels">
+        <span>a</span><span>b</span><span>c</span><span>d</span>
+        <span>e</span><span>f</span><span>g</span><span>h</span>
+      </div>
+    </section>
+
+    <!-- Right panel: Status + controls -->
+    <aside class="panel panel-right">
+      <div class="status-box" id="status-box">
+        <div class="status-icon" id="status-icon">♙</div>
+        <p class="status-text" id="status-text">White's turn</p>
+        <p class="status-sub" id="status-sub"></p>
+      </div>
+
+      <div class="controls">
+        <button class="ctrl-btn ctrl-primary" id="new-game-btn">New Game</button>
+        <button class="ctrl-btn ctrl-secondary" id="undo-btn">Undo Move</button>
+        <button class="ctrl-btn ctrl-secondary" id="flip-btn">Flip Board</button>
+      </div>
+
+      <div class="legend">
+        <h3 class="panel-heading">Legend</h3>
+        <ul class="legend-list">
+          <li><span class="legend-dot dot-selected"></span>Selected piece</li>
+          <li><span class="legend-dot dot-move"></span>Valid move</li>
+          <li><span class="legend-dot dot-capture"></span>Capture</li>
+          <li><span class="legend-dot dot-check"></span>King in check</li>
+          <li><span class="legend-dot dot-last"></span>Last move</li>
+        </ul>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Promotion modal -->
+  <div class="modal-overlay" id="promo-modal" hidden>
+    <div class="modal">
+      <h2 class="modal-title">Pawn Promotion</h2>
+      <p class="modal-sub">Choose a piece to promote to:</p>
+      <div class="promo-choices" id="promo-choices"></div>
+    </div>
+  </div>
+
+  <!-- Game-over modal -->
+  <div class="modal-overlay" id="gameover-modal" hidden>
+    <div class="modal">
+      <div class="modal-trophy" id="gameover-icon">🏆</div>
+      <h2 class="modal-title" id="gameover-title">Checkmate!</h2>
+      <p class="modal-sub" id="gameover-sub">White wins</p>
+      <button class="ctrl-btn ctrl-primary" id="play-again-btn">Play Again</button>
+    </div>
+  </div>
+
+  <script src="chess.js"></script>
+</body>
+</html>
