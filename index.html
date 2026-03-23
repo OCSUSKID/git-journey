@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo">Portfolio</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <p class="hero-greeting">Hello, I'm</p>
+      <h1 class="hero-name">Alex Johnson</h1>
+      <h2 class="hero-title">Full-Stack Developer &amp; Designer</h2>
+      <p class="hero-bio">I build beautiful, responsive web experiences that make an impact.</p>
+      <div class="hero-buttons">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll Down</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section-title">About <span>Me</span></h2>
+      <div class="about-grid">
+        <div class="about-image">
+          <div class="avatar-placeholder">AJ</div>
+        </div>
+        <div class="about-text">
+          <p>
+            Hi! I'm Alex, a passionate full-stack developer with over 5 years of experience
+            crafting modern web applications. I love turning complex problems into simple,
+            beautiful, and intuitive solutions.
+          </p>
+          <p>
+            When I'm not coding, you'll find me hiking, experimenting with new recipes, or
+            contributing to open-source projects. I believe great software is built with both
+            technical excellence and human empathy.
+          </p>
+          <div class="about-stats">
+            <div class="stat">
+              <span class="stat-number">5+</span>
+              <span class="stat-label">Years Experience</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">40+</span>
+              <span class="stat-label">Projects Completed</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">20+</span>
+              <span class="stat-label">Happy Clients</span>
+            </div>
+          </div>
+          <a href="#contact" class="btn btn-primary">Hire Me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="section section-alt" id="skills">
+    <div class="container">
+      <h2 class="section-title">My <span>Skills</span></h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">🌐</div>
+          <h3>Frontend</h3>
+          <ul>
+            <li>HTML5 &amp; CSS3</li>
+            <li>JavaScript (ES6+)</li>
+            <li>React &amp; Vue.js</li>
+            <li>TypeScript</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">⚙️</div>
+          <h3>Backend</h3>
+          <ul>
+            <li>Node.js &amp; Express</li>
+            <li>Python &amp; Django</li>
+            <li>REST &amp; GraphQL APIs</li>
+            <li>PostgreSQL &amp; MongoDB</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🛠️</div>
+          <h3>Tools &amp; DevOps</h3>
+          <ul>
+            <li>Git &amp; GitHub</li>
+            <li>Docker &amp; Kubernetes</li>
+            <li>AWS &amp; Vercel</li>
+            <li>CI/CD Pipelines</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🎨</div>
+          <h3>Design</h3>
+          <ul>
+            <li>Figma &amp; Adobe XD</li>
+            <li>UI/UX Principles</li>
+            <li>Responsive Design</li>
+            <li>Accessibility (WCAG)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section" id="projects">
+    <div class="container">
+      <h2 class="section-title">Featured <span>Projects</span></h2>
+      <div class="projects-grid">
+
+        <article class="project-card">
+          <div class="project-thumb project-thumb-1">
+            <span class="project-tag">React · Node.js</span>
+          </div>
+          <div class="project-info">
+            <h3>Task Manager App</h3>
+            <p>A full-featured task management application with real-time collaboration,
+               drag-and-drop boards, and team analytics dashboard.</p>
+            <div class="project-links">
+              <a href="#" class="btn btn-sm btn-primary">Live Demo</a>
+              <a href="#" class="btn btn-sm btn-outline">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-thumb project-thumb-2">
+            <span class="project-tag">Next.js · PostgreSQL</span>
+          </div>
+          <div class="project-info">
+            <h3>E-Commerce Platform</h3>
+            <p>A scalable online store with product search, cart management,
+               Stripe payments, and an admin inventory panel.</p>
+            <div class="project-links">
+              <a href="#" class="btn btn-sm btn-primary">Live Demo</a>
+              <a href="#" class="btn btn-sm btn-outline">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-thumb project-thumb-3">
+            <span class="project-tag">Python · FastAPI</span>
+          </div>
+          <div class="project-info">
+            <h3>Weather Dashboard</h3>
+            <p>An interactive weather dashboard that aggregates data from multiple APIs
+               and visualizes forecasts with animated charts.</p>
+            <div class="project-links">
+              <a href="#" class="btn btn-sm btn-primary">Live Demo</a>
+              <a href="#" class="btn btn-sm btn-outline">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section section-alt" id="contact">
+    <div class="container">
+      <h2 class="section-title">Get In <span>Touch</span></h2>
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p>Have a project in mind or want to chat? I'd love to hear from you.
+             Drop me a message and I'll get back to you within 24 hours.</p>
+          <ul class="contact-details">
+            <li>📧 <a href="mailto:alex@example.com">alex@example.com</a></li>
+            <li>💼 <a href="#">LinkedIn</a></li>
+            <li>🐙 <a href="#">GitHub</a></li>
+            <li>🐦 <a href="#">Twitter / X</a></li>
+          </ul>
+        </div>
+        <form class="contact-form" id="contact-form" novalidate>
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+          <p class="form-status" id="form-status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>© <span id="year"></span> Alex Johnson. Crafted with ❤️ and lots of ☕</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
