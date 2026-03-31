@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio – Creative Developer</title>
+  <link rel="stylesheet" href="portfolio.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── Canvas background ───────────────────────────────────────────────── -->
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- ── Navigation ─────────────────────────────────────────────────────── -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" aria-label="Go to top">
+        <span class="logo-bracket">&lt;</span>Dev<span class="logo-bracket">/&gt;</span>
+      </a>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <a href="#contact" class="nav-cta">Hire Me</a>
+
+      <button id="hamburger" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Hero ───────────────────────────────────────────────────────────── -->
+  <section id="hero" class="hero">
+    <div class="hero-content">
+      <p class="hero-greeting">Hello, World! 👋</p>
+      <h1 class="hero-name">
+        I'm <span class="gradient-text">Alex Rivera</span>
+      </h1>
+      <p class="hero-role">
+        <span class="typed-prefix">I </span>
+        <span id="typed-text" class="typed-text"></span>
+        <span class="typed-cursor" aria-hidden="true">|</span>
+      </p>
+      <p class="hero-bio">
+        Full-stack developer &amp; designer crafting high-performance digital
+        experiences that look stunning and work flawlessly.
+      </p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-ghost">Let's Talk</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" data-target="50">0</span><span>+</span>
+          <span class="stat-label">Projects</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="5">0</span><span>+</span>
+          <span class="stat-label">Years Exp.</span>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat">
+          <span class="stat-num" data-target="30">0</span><span>+</span>
+          <span class="stat-label">Happy Clients</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-avatar">
+        <div class="avatar-ring ring-1"></div>
+        <div class="avatar-ring ring-2"></div>
+        <div class="avatar-ring ring-3"></div>
+        <div class="avatar-photo">
+          <span class="avatar-initials">AR</span>
+        </div>
+        <!-- Floating badges -->
+        <div class="float-badge badge-top-right">
+          <span class="badge-icon">⚡</span>
+          <span class="badge-text">Fast</span>
+        </div>
+        <div class="float-badge badge-bottom-left">
+          <span class="badge-icon">🎨</span>
+          <span class="badge-text">Creative</span>
+        </div>
+        <div class="float-badge badge-top-left">
+          <span class="badge-icon">🔒</span>
+          <span class="badge-text">Secure</span>
+        </div>
+      </div>
+    </div>
+
+    <a href="#about" class="scroll-cta" aria-label="Scroll to About section">
+      <span class="scroll-mouse"><span class="scroll-wheel"></span></span>
+      <span class="scroll-label">Scroll</span>
+    </a>
+  </section>
+
+  <!-- ── About ──────────────────────────────────────────────────────────── -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-tag">// about me</p>
+        <h2 class="section-title">Who Am I?</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-image-col reveal">
+          <div class="about-img-wrapper">
+            <div class="about-img-card">
+              <span class="about-emoji">🚀</span>
+              <span class="about-img-label">Fullstack Dev</span>
+            </div>
+            <div class="about-img-badge">
+              <span class="pulse-dot" aria-hidden="true"></span>
+              Available for Work
+            </div>
+          </div>
+        </div>
+
+        <div class="about-text-col reveal">
+          <p class="about-lead">
+            I'm a passionate <strong>Full-Stack Developer</strong> with 5+ years of
+            experience building scalable web applications and beautiful interfaces.
+          </p>
+          <p class="about-body">
+            From pixel-perfect front-ends to robust back-end systems, I love turning
+            complex problems into clean, elegant solutions. I thrive in collaborative
+            environments and care deeply about code quality, performance, and accessibility.
+          </p>
+          <p class="about-body">
+            When I'm not coding, you'll find me contributing to open-source projects,
+            writing technical blog posts, or exploring the latest design trends.
+          </p>
+
+          <ul class="about-details" role="list">
+            <li><span class="detail-label">Location</span><span class="detail-value">San Francisco, CA</span></li>
+            <li><span class="detail-label">Email</span><span class="detail-value">alex@example.com</span></li>
+            <li><span class="detail-label">Availability</span><span class="detail-value available">Open to offers</span></li>
+          </ul>
+
+          <div class="about-actions">
+            <a href="#contact" class="btn btn-primary">Get In Touch</a>
+            <a href="#" class="btn btn-ghost">Download CV</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Skills ─────────────────────────────────────────────────────────── -->
+  <section id="skills" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-tag">// skills</p>
+        <h2 class="section-title">What I Work With</h2>
+      </div>
+
+      <div class="skills-tabs" role="tablist" aria-label="Skill categories">
+        <button class="skill-tab active" role="tab" aria-selected="true" data-target="frontend">Frontend</button>
+        <button class="skill-tab" role="tab" aria-selected="false" data-target="backend">Backend</button>
+        <button class="skill-tab" role="tab" aria-selected="false" data-target="tools">Tools &amp; Design</button>
+      </div>
+
+      <!-- Frontend skills -->
+      <div class="skills-panel active" id="panel-frontend" role="tabpanel">
+        <div class="skills-grid">
+          <div class="skill-card reveal" data-skill="HTML / CSS" data-level="95">
+            <div class="skill-icon" aria-hidden="true">🌐</div>
+            <div class="skill-info">
+              <div class="skill-header">
+                <span class="skill-name">HTML / CSS</span>
+                <span class="skill-pct">95%</span>
+              </div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100">
+                <div class="skill-fill" style="--pct:95%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-skill="JavaScript" data-level="90">
+            <div class="skill-icon" aria-hidden="true">⚡</div>
+            <div class="skill-info">
+              <div class="skill-header">
+                <span class="skill-name">JavaScript / TypeScript</span>
+                <span class="skill-pct">90%</span>
+              </div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
+                <div class="skill-fill" style="--pct:90%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-skill="React" data-level="88">
+            <div class="skill-icon" aria-hidden="true">⚛️</div>
+            <div class="skill-info">
+              <div class="skill-header">
+                <span class="skill-name">React / Next.js</span>
+                <span class="skill-pct">88%</span>
+              </div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">
+                <div class="skill-fill" style="--pct:88%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-skill="Vue" data-level="75">
+            <div class="skill-icon" aria-hidden="true">💚</div>
+            <div class="skill-info">
+              <div class="skill-header">
+                <span class="skill-name">Vue / Nuxt</span>
+                <span class="skill-pct">75%</span>
+              </div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+                <div class="skill-fill" style="--pct:75%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-skill="TailwindCSS" data-level="92">
+            <div class="skill-icon" aria-hidden="true">🎨</div>
+            <div class="skill-info">
+              <div class="skill-header">
+                <span class="skill-name">Tailwind CSS</span>
+                <span class="skill-pct">92%</span>
+              </div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">
+                <div class="skill-fill" style="--pct:92%"></div>
+              </div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-skill="Animation" data-level="80">
+            <div class="skill-icon" aria-hidden="true">✨</div>
+            <div class="skill-info">
+              <div class="skill-header">
+                <span class="skill-name">GSAP / Framer Motion</span>
+                <span class="skill-pct">80%</span>
+              </div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">
+                <div class="skill-fill" style="--pct:80%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Backend skills -->
+      <div class="skills-panel" id="panel-backend" role="tabpanel" hidden>
+        <div class="skills-grid">
+          <div class="skill-card reveal" data-level="85">
+            <div class="skill-icon" aria-hidden="true">🟢</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">Node.js / Express</span><span class="skill-pct">85%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:85%"></div></div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-level="78">
+            <div class="skill-icon" aria-hidden="true">🐍</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">Python / Django</span><span class="skill-pct">78%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:78%"></div></div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-level="82">
+            <div class="skill-icon" aria-hidden="true">🗃️</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">PostgreSQL / MySQL</span><span class="skill-pct">82%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:82%"></div></div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-level="74">
+            <div class="skill-icon" aria-hidden="true">🍃</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">MongoDB</span><span class="skill-pct">74%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="74" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:74%"></div></div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-level="70">
+            <div class="skill-icon" aria-hidden="true">☁️</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">AWS / GCP</span><span class="skill-pct">70%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:70%"></div></div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-level="80">
+            <div class="skill-icon" aria-hidden="true">🐳</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">Docker / Kubernetes</span><span class="skill-pct">80%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:80%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools & Design skills -->
+      <div class="skills-panel" id="panel-tools" role="tabpanel" hidden>
+        <div class="skills-grid">
+          <div class="skill-card reveal" data-level="90">
+            <div class="skill-icon" aria-hidden="true">🐙</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">Git / GitHub</span><span class="skill-pct">90%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:90%"></div></div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-level="85">
+            <div class="skill-icon" aria-hidden="true">🎭</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">Figma / Adobe XD</span><span class="skill-pct">85%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:85%"></div></div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-level="75">
+            <div class="skill-icon" aria-hidden="true">🔬</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">Testing (Jest / Cypress)</span><span class="skill-pct">75%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:75%"></div></div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-level="80">
+            <div class="skill-icon" aria-hidden="true">⚙️</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">CI/CD Pipelines</span><span class="skill-pct">80%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:80%"></div></div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-level="88">
+            <div class="skill-icon" aria-hidden="true">🖼️</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">Responsive Design</span><span class="skill-pct">88%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:88%"></div></div>
+            </div>
+          </div>
+          <div class="skill-card reveal" data-level="76">
+            <div class="skill-icon" aria-hidden="true">♿</div>
+            <div class="skill-info">
+              <div class="skill-header"><span class="skill-name">Web Accessibility</span><span class="skill-pct">76%</span></div>
+              <div class="skill-bar" role="progressbar" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100"><div class="skill-fill" style="--pct:76%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Projects ───────────────────────────────────────────────────────── -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-tag">// projects</p>
+        <h2 class="section-title">Featured Work</h2>
+      </div>
+
+      <div class="project-filters" role="group" aria-label="Filter projects">
+        <button class="proj-filter active" data-filter="all">All</button>
+        <button class="proj-filter" data-filter="web">Web App</button>
+        <button class="proj-filter" data-filter="mobile">Mobile</button>
+        <button class="proj-filter" data-filter="design">Design</button>
+      </div>
+
+      <div class="projects-grid">
+
+        <article class="project-card reveal" data-category="web">
+          <div class="project-img" style="--grad: linear-gradient(135deg,#6366f1,#8b5cf6)">
+            <span class="project-emoji" aria-hidden="true">🛒</span>
+            <div class="project-overlay">
+              <a href="#" class="proj-link" aria-label="Live demo of E-Commerce Platform">Live Demo ↗</a>
+              <a href="#" class="proj-link" aria-label="GitHub source of E-Commerce Platform">GitHub ↗</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="proj-tag">React</span>
+              <span class="proj-tag">Node.js</span>
+              <span class="proj-tag">Stripe</span>
+            </div>
+            <h3 class="project-title">E-Commerce Platform</h3>
+            <p class="project-desc">
+              Full-featured online store with real-time inventory, AI-powered
+              recommendations, and a silky-smooth checkout flow.
+            </p>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-category="web">
+          <div class="project-img" style="--grad: linear-gradient(135deg,#f59e0b,#ef4444)">
+            <span class="project-emoji" aria-hidden="true">📊</span>
+            <div class="project-overlay">
+              <a href="#" class="proj-link" aria-label="Live demo of Analytics Dashboard">Live Demo ↗</a>
+              <a href="#" class="proj-link" aria-label="GitHub source of Analytics Dashboard">GitHub ↗</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="proj-tag">Vue.js</span>
+              <span class="proj-tag">D3.js</span>
+              <span class="proj-tag">PostgreSQL</span>
+            </div>
+            <h3 class="project-title">Analytics Dashboard</h3>
+            <p class="project-desc">
+              Real-time analytics platform with interactive charts, custom
+              reporting, and role-based access control.
+            </p>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-category="mobile">
+          <div class="project-img" style="--grad: linear-gradient(135deg,#10b981,#06b6d4)">
+            <span class="project-emoji" aria-hidden="true">🏃</span>
+            <div class="project-overlay">
+              <a href="#" class="proj-link" aria-label="Live demo of FitTrack App">App Store ↗</a>
+              <a href="#" class="proj-link" aria-label="GitHub source of FitTrack App">GitHub ↗</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="proj-tag">React Native</span>
+              <span class="proj-tag">Firebase</span>
+              <span class="proj-tag">ML Kit</span>
+            </div>
+            <h3 class="project-title">FitTrack App</h3>
+            <p class="project-desc">
+              Cross-platform fitness tracker with AI form analysis, social
+              challenges, and personalized workout plans.
+            </p>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-category="design">
+          <div class="project-img" style="--grad: linear-gradient(135deg,#ec4899,#f43f5e)">
+            <span class="project-emoji" aria-hidden="true">🎨</span>
+            <div class="project-overlay">
+              <a href="#" class="proj-link" aria-label="Behance case study for Brand Design System">Behance ↗</a>
+              <a href="#" class="proj-link" aria-label="Figma file for Brand Design System">Figma ↗</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="proj-tag">Figma</span>
+              <span class="proj-tag">Design System</span>
+              <span class="proj-tag">Storybook</span>
+            </div>
+            <h3 class="project-title">Brand Design System</h3>
+            <p class="project-desc">
+              End-to-end design system including tokens, components, and
+              documentation—used across 4 product teams.
+            </p>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-category="web">
+          <div class="project-img" style="--grad: linear-gradient(135deg,#3b82f6,#1d4ed8)">
+            <span class="project-emoji" aria-hidden="true">🤖</span>
+            <div class="project-overlay">
+              <a href="#" class="proj-link" aria-label="Live demo of AI Chat Interface">Live Demo ↗</a>
+              <a href="#" class="proj-link" aria-label="GitHub source of AI Chat Interface">GitHub ↗</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="proj-tag">Next.js</span>
+              <span class="proj-tag">OpenAI</span>
+              <span class="proj-tag">TypeScript</span>
+            </div>
+            <h3 class="project-title">AI Chat Interface</h3>
+            <p class="project-desc">
+              Conversational UI powered by GPT-4 with streaming responses,
+              conversation history, and markdown rendering.
+            </p>
+          </div>
+        </article>
+
+        <article class="project-card reveal" data-category="mobile">
+          <div class="project-img" style="--grad: linear-gradient(135deg,#f97316,#fbbf24)">
+            <span class="project-emoji" aria-hidden="true">🗺️</span>
+            <div class="project-overlay">
+              <a href="#" class="proj-link" aria-label="Live demo of Local Explorer App">App Store ↗</a>
+              <a href="#" class="proj-link" aria-label="GitHub source of Local Explorer App">GitHub ↗</a>
+            </div>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="proj-tag">Flutter</span>
+              <span class="proj-tag">Maps API</span>
+              <span class="proj-tag">Dart</span>
+            </div>
+            <h3 class="project-title">Local Explorer</h3>
+            <p class="project-desc">
+              Geo-aware discovery app that surfaces hidden local gems using
+              community reviews and ML-powered ranking.
+            </p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Experience ─────────────────────────────────────────────────────── -->
+  <section id="experience" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-tag">// experience</p>
+        <h2 class="section-title">My Journey</h2>
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              <span class="timeline-period">2022 – Present</span>
+              <span class="timeline-type">Full-time</span>
+            </div>
+            <h3 class="timeline-role">Senior Frontend Engineer</h3>
+            <p class="timeline-company">TechCorp Inc. · San Francisco, CA</p>
+            <ul class="timeline-bullets" role="list">
+              <li>Led redesign of core product UI, increasing user retention by 34%.</li>
+              <li>Architected a micro-frontend system serving 2M+ monthly users.</li>
+              <li>Mentored a team of 4 junior developers and conducted code reviews.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span class="proj-tag">React</span>
+              <span class="proj-tag">TypeScript</span>
+              <span class="proj-tag">GraphQL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              <span class="timeline-period">2020 – 2022</span>
+              <span class="timeline-type">Full-time</span>
+            </div>
+            <h3 class="timeline-role">Full-Stack Developer</h3>
+            <p class="timeline-company">StartupXYZ · Remote</p>
+            <ul class="timeline-bullets" role="list">
+              <li>Built an MVP from scratch that secured $2M in Series A funding.</li>
+              <li>Reduced API response times by 60% through query optimisation.</li>
+              <li>Integrated third-party payments (Stripe) and identity (Auth0).</li>
+            </ul>
+            <div class="timeline-tags">
+              <span class="proj-tag">Node.js</span>
+              <span class="proj-tag">Vue.js</span>
+              <span class="proj-tag">PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              <span class="timeline-period">2019 – 2020</span>
+              <span class="timeline-type">Freelance</span>
+            </div>
+            <h3 class="timeline-role">Freelance Web Developer</h3>
+            <p class="timeline-company">Self-Employed · Remote</p>
+            <ul class="timeline-bullets" role="list">
+              <li>Delivered 20+ client projects spanning e-commerce, SaaS, and portfolios.</li>
+              <li>Maintained a 5-star rating on Upwork with 100% job success score.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span class="proj-tag">WordPress</span>
+              <span class="proj-tag">JavaScript</span>
+              <span class="proj-tag">PHP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-dot" aria-hidden="true"></div>
+          <div class="timeline-card">
+            <div class="timeline-meta">
+              <span class="timeline-period">2015 – 2019</span>
+              <span class="timeline-type">Education</span>
+            </div>
+            <h3 class="timeline-role">B.Sc. Computer Science</h3>
+            <p class="timeline-company">University of California, Berkeley</p>
+            <ul class="timeline-bullets" role="list">
+              <li>Graduated Magna Cum Laude · GPA 3.8 / 4.0.</li>
+              <li>Co-founded the Web Dev Club with 200+ active members.</li>
+            </ul>
+            <div class="timeline-tags">
+              <span class="proj-tag">Algorithms</span>
+              <span class="proj-tag">Systems</span>
+              <span class="proj-tag">AI/ML</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Testimonials ───────────────────────────────────────────────────── -->
+  <section id="testimonials" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-tag">// testimonials</p>
+        <h2 class="section-title">What Clients Say</h2>
+      </div>
+
+      <div class="testimonials-track" id="testimonials-track" aria-live="polite">
+
+        <blockquote class="testimonial-card reveal">
+          <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Alex delivered our platform ahead of schedule and the code quality
+            was outstanding. The UI exceeded our wildest expectations!"
+          </p>
+          <footer class="testimonial-author">
+            <div class="author-avatar" aria-hidden="true">SC</div>
+            <div>
+              <strong class="author-name">Sarah Chen</strong>
+              <span class="author-title">CTO, DataFlow Labs</span>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card reveal">
+          <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Working with Alex was a game-changer. The analytics dashboard he built
+            gave us insights we never had before. Highly recommend!"
+          </p>
+          <footer class="testimonial-author">
+            <div class="author-avatar" aria-hidden="true">MR</div>
+            <div>
+              <strong class="author-name">Marcus Rodriguez</strong>
+              <span class="author-title">Founder, GrowthHive</span>
+            </div>
+          </footer>
+        </blockquote>
+
+        <blockquote class="testimonial-card reveal">
+          <div class="testimonial-stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <p class="testimonial-text">
+            "Exceptional attention to detail. Every pixel was perfect and the
+            performance was incredible. Will definitely hire again!"
+          </p>
+          <footer class="testimonial-author">
+            <div class="author-avatar" aria-hidden="true">EK</div>
+            <div>
+              <strong class="author-name">Emma Kowalski</strong>
+              <span class="author-title">Product Lead, Visionary Co.</span>
+            </div>
+          </footer>
+        </blockquote>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Contact ────────────────────────────────────────────────────────── -->
+  <section id="contact" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <p class="section-tag">// contact</p>
+        <h2 class="section-title">Let's Build Something</h2>
+      </div>
+
+      <div class="contact-grid">
+
+        <div class="contact-info reveal">
+          <p class="contact-lead">
+            Have a project in mind? I'd love to hear about it. Let's create
+            something extraordinary together.
+          </p>
+          <ul class="contact-list" role="list">
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">📧</span>
+              <div>
+                <span class="contact-item-label">Email</span>
+                <a href="mailto:alex@example.com" class="contact-item-value">alex@example.com</a>
+              </div>
+            </li>
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">📍</span>
+              <div>
+                <span class="contact-item-label">Location</span>
+                <span class="contact-item-value">San Francisco, CA (Remote-friendly)</span>
+              </div>
+            </li>
+            <li class="contact-item">
+              <span class="contact-icon" aria-hidden="true">⏰</span>
+              <div>
+                <span class="contact-item-label">Response time</span>
+                <span class="contact-item-value">Within 24 hours</span>
+              </div>
+            </li>
+          </ul>
+
+          <div class="social-links" role="list" aria-label="Social media links">
+            <a href="#" class="social-link" role="listitem" aria-label="GitHub profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .5C5.37.5 0 5.87 0 12.5c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.49 1 .1-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.14-.3-.54-1.52.1-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.64 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 22.3 24 17.8 24 12.5 24 5.87 18.63.5 12 .5z"/>
+              </svg>
+            </a>
+            <a href="#" class="social-link" role="listitem" aria-label="LinkedIn profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM3.56 20.45h3.56V9H3.56v11.45zM22.23 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.72V1.72C24 .77 23.21 0 22.23 0z"/>
+              </svg>
+            </a>
+            <a href="#" class="social-link" role="listitem" aria-label="Twitter / X profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+            <a href="#" class="social-link" role="listitem" aria-label="CodePen profile">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M24 8.182l-.018-.087-.017-.05c-.01-.024-.018-.05-.03-.075-.003-.018-.015-.034-.02-.05l-.035-.067-.03-.05-.044-.06-.046-.045-.06-.045-.046-.03-.06-.044-.044-.04-.015-.02L12.58.19c-.347-.232-.796-.232-1.142 0L.453 7.502l-.015.015-.044.035-.06.05-.038.04-.05.056-.037.045-.05.06c-.02.017-.03.03-.03.046l-.05.06-.02.06c-.02.01-.02.04-.03.07l-.01.05C0 8.12 0 8.15 0 8.18v7.497c0 .044.003.09.01.135l.01.046c.005.03.015.06.02.086l.015.05c.01.027.016.053.027.075l.022.05c0 .01.015.04.03.06l.03.04c.015.01.03.04.045.06l.03.04.04.04c.01.013.01.03.03.03l.06.042.04.03.01.014 10.97 7.33c.164.12.375.163.57.163s.39-.06.57-.18l10.99-7.28.014-.01.046-.037.06-.043.048-.036.015-.02.06-.05.03-.04.04-.06.015-.02.03-.05.023-.08.02-.05.01-.05.007-.1v-7.49c0-.045-.003-.09-.007-.133zm-11.99 6.28l-3.65-2.44 3.65-2.442 3.65 2.44-3.65 2.44zm-1.034-6.674l-4.473 2.99L2.89 8.362l8.086-5.39V7.79zm-6.33 4.233l-2.582 1.73V10.3l2.582 1.726zm1.857 1.25l4.473 2.99v4.82L2.89 15.69l3.612-2.417v-.004zm6.537 2.99l4.474-2.98 3.613 2.42-8.087 5.39v-4.82zm6.33-4.23l2.583-1.72v3.456l-2.583-1.73zm-1.855-1.24L13.042 7.8V2.97l8.085 5.39-3.612 2.415v.003z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <form id="contact-form" class="contact-form reveal" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cf-name">Name</label>
+              <input type="text" id="cf-name" name="name" placeholder="Your name" required autocomplete="name" />
+              <span class="form-error" id="err-name" role="alert"></span>
+            </div>
+            <div class="form-group">
+              <label for="cf-email">Email</label>
+              <input type="email" id="cf-email" name="email" placeholder="your@email.com" required autocomplete="email" />
+              <span class="form-error" id="err-email" role="alert"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cf-subject">Subject</label>
+            <input type="text" id="cf-subject" name="subject" placeholder="What's this about?" />
+          </div>
+          <div class="form-group">
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" name="message" placeholder="Tell me about your project…" rows="5" required></textarea>
+            <span class="form-error" id="err-message" role="alert"></span>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" id="cf-submit">
+            <span class="btn-text">Send Message</span>
+            <span class="btn-icon" aria-hidden="true">→</span>
+          </button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="#hero" class="nav-logo footer-logo" aria-label="Back to top">
+        <span class="logo-bracket">&lt;</span>Dev<span class="logo-bracket">/&gt;</span>
+      </a>
+      <p class="footer-copy">
+        Crafted with ❤️ &amp; ☕ by Alex Rivera · © <span id="footer-year"></span>
+      </p>
+      <a href="#hero" class="back-to-top" aria-label="Back to top">↑</a>
+    </div>
+  </footer>
+
+  <!-- ── Toast ──────────────────────────────────────────────────────────── -->
+  <div id="portfolio-toast" class="p-toast" role="status" aria-live="polite"></div>
+
+  <script src="portfolio.js"></script>
+</body>
+</html>
