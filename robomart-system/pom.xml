@@ -33,12 +33,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Ensure ASM version supports Java 25 class file format -->
-        <dependency>
-            <groupId>org.ow2.asm</groupId>
-            <artifactId>asm</artifactId>
-            <version>9.8</version>
-        </dependency>
+        <!-- Rely on Spring-managed ASM implementation from Spring Framework / Boot -->
+        <!-- Removed explicit org.ow2.asm pin to avoid conflicts with Spring-managed versions -->
     </dependencies>
 
     <build>
