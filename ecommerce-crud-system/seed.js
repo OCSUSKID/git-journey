@@ -21,108 +21,68 @@ function createPasswordRecord(password) {
 }
 
 db.serialize(() => {
-  db.run(`CREATE TABLE IF NOT EXISTS products (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    description TEXT,
-    category TEXT NOT NULL DEFAULT 'General',
-    price REAL NOT NULL,
-    stock INTEGER NOT NULL DEFAULT 0,
-    image_url TEXT,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  )`);
+  const admin = createPasswordRecord('admin123');
 
-  db.run(`CREATE TABLE IF NOT EXISTS orders (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    customer_name TEXT NOT NULL,
-    product_id INTEGER NOT NULL,
-    quantity INTEGER NOT NULL,
-    status TEXT NOT NULL DEFAULT 'pending',
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY(product_id) REFERENCES products(id)
-  )`);
+  const statements = [
+    'PRAGMA foreign_keys = ON',
+    'BEGIN TRANSACTION',
+    'DROP TABLE IF EXISTS orders',
+    'DROP TABLE IF EXISTS products',
+    'DROP TABLE IF EXISTS users',
+    `CREATE TABLE products (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      description TEXT,
+      category TEXT NOT NULL DEFAULT 'General',
+      price REAL NOT NULL,
+      stock INTEGER NOT NULL DEFAULT 0,
+      image_url TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`,
+    `CREATE TABLE orders (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      customer_name TEXT NOT NULL,
+      product_id INTEGER NOT NULL,
+      quantity INTEGER NOT NULL,
+      status TEXT NOT NULL DEFAULT 'pending',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY(product_id) REFERENCES products(id)
+    )`,
+    `CREATE TABLE users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT NOT NULL UNIQUE,
+      password_salt TEXT NOT NULL,
+      password_hash TEXT NOT NULL,
+      role TEXT NOT NULL DEFAULT 'admin',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`,
+    `INSERT INTO products (name, description, category, price, stock, image_url) VALUES
+      ('Canvas Sneakers', 'Lightweight everyday sneakers with a clean finish.', 'Footwear', 59.99, 18, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80'),
+      ('Leather Backpack', 'Durable commuter backpack with multiple compartments.', 'Accessories', 89.5, 12, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=80'),
+      ('Wireless Headphones', 'Noise-isolating headphones with 30-hour battery life.', 'Electronics', 129.0, 25, 'https://images.unsplash.com/photo-1518441902117-f0a9d6b0bb58?auto=format&fit=crop&w=900&q=80')`,
+    `INSERT INTO users (username, password_salt, password_hash, role) VALUES
+      ('admin', '${admin.salt}', '${admin.password_hash}', 'admin')`,
+    `INSERT INTO orders (customer_name, product_id, quantity, status) VALUES
+      ('Ava Johnson', 1, 2, 'paid')`,
+    'COMMIT'
+  ];
 
-  db.run(`CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE,
-    password_salt TEXT NOT NULL,
-    password_hash TEXT NOT NULL,
-    role TEXT NOT NULL DEFAULT 'admin',
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-  )`);
-
-  db.all('PRAGMA table_info(products)', [], (err, columns) => {
+  db.exec(statements.join(';\n'), (err) => {
     if (err) {
-      console.error('Failed to inspect products table', err.message);
+      console.error('Seed failed', err.message);
       process.exitCode = 1;
       db.close();
       return;
     }
 
-    const hasCategory = columns.some((column) => column.name === 'category');
-    if (!hasCategory) {
-      db.run("ALTER TABLE products ADD COLUMN category TEXT NOT NULL DEFAULT 'General'", (alterErr) => {
-        if (alterErr) {
-          console.error('Failed to add category column', alterErr.message);
-          process.exitCode = 1;
-          db.close();
-          return;
-        }
-
-        seedData();
-      });
-      return;
-    }
-
-    seedData();
-  });
-
-  function seedData() {
-    db.run('DELETE FROM orders');
-    db.run('DELETE FROM products');
-
-    db.run('DELETE FROM users');
-
-    const products = db.prepare('INSERT INTO products (name, description, category, price, stock, image_url) VALUES (?, ?, ?, ?, ?, ?)');
-    products.run('Canvas Sneakers', 'Lightweight everyday sneakers with a clean finish.', 'Footwear', 59.99, 18, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80');
-    products.run('Leather Backpack', 'Durable commuter backpack with multiple compartments.', 'Accessories', 89.5, 12, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=80');
-    products.run('Wireless Headphones', 'Noise-isolating headphones with 30-hour battery life.', 'Electronics', 129.0, 25, 'https://images.unsplash.com/photo-1518441902117-f0a9d6b0bb58?auto=format&fit=crop&w=900&q=80');
-    products.finalize();
-
-    const admin = createPasswordRecord('admin123');
-    db.run('INSERT INTO users (username, password_salt, password_hash, role) VALUES (?, ?, ?, ?)', [
-      'admin',
-      admin.salt,
-      admin.password_hash,
-      'admin'
-    ]);
-
-    db.get('SELECT id FROM products ORDER BY id ASC LIMIT 1', [], (productErr, row) => {
-      if (productErr) {
-        console.error('Seed verification failed', productErr.message);
+    db.get('SELECT COUNT(*) AS productCount FROM products', [], (countErr, row) => {
+      if (countErr) {
+        console.error('Seed verification failed', countErr.message);
         process.exitCode = 1;
-        db.close();
-        return;
+      } else {
+        console.log(`Seeded ${row.productCount} products into ${dbFile}`);
       }
-
-      if (row) {
-        db.run('INSERT INTO orders (customer_name, product_id, quantity, status) VALUES (?, ?, ?, ?)', [
-          'Ava Johnson',
-          row.id,
-          2,
-          'paid'
-        ]);
-      }
-
-      db.all('SELECT * FROM products', [], (verifyErr, productRows) => {
-        if (verifyErr) {
-          console.error('Seed verification failed', verifyErr.message);
-          process.exitCode = 1;
-        } else {
-          console.log(`Seeded ${productRows.length} products into ${dbFile}`);
-        }
-        db.close();
-      });
+      db.close();
     });
-  }
+  });
 });
