@@ -45,11 +45,29 @@ function requireAdmin(req, res, next) {
   next();
 }
 
+function ensureColumn(tableName, columnName, definition, callback) {
+  db.all(`PRAGMA table_info(${tableName})`, [], (err, columns) => {
+    if (err) {
+      callback(err);
+      return;
+    }
+
+    const exists = columns.some((column) => column.name === columnName);
+    if (exists) {
+      callback(null);
+      return;
+    }
+
+    db.run(`ALTER TABLE ${tableName} ADD COLUMN ${definition}`, callback);
+  });
+}
+
 db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT,
+    category TEXT NOT NULL DEFAULT 'General',
     price REAL NOT NULL,
     stock INTEGER NOT NULL DEFAULT 0,
     image_url TEXT,
@@ -75,6 +93,10 @@ db.serialize(() => {
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
 
+  ensureColumn('products', 'category', "category TEXT NOT NULL DEFAULT 'General'", (err) => {
+    if (err) console.error('Failed to ensure category column', err.message);
+  });
+
   db.get('SELECT id FROM users WHERE username = ?', [ADMIN_USERNAME], (err, row) => {
     if (err) {
       console.error('Failed to check default admin', err.message);
@@ -99,16 +121,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 function validateProduct(body) {
   const name = (body.name || '').toString().trim();
   const description = (body.description || '').toString().trim();
+  const category = (body.category || 'General').toString().trim() || 'General';
   const price = Number(body.price);
   const stock = Number(body.stock);
   const image_url = (body.image_url || '').toString().trim();
 
   if (!name) return { error: 'Name required' };
   if (name.length > 120) return { error: 'Name must be 1-120 chars' };
+  if (category.length > 80) return { error: 'Category must be 1-80 chars' };
   if (!Number.isFinite(price) || price < 0) return { error: 'Price must be a valid positive number' };
   if (!Number.isInteger(stock) || stock < 0) return { error: 'Stock must be a whole number 0 or greater' };
 
-  return { name, description, price, stock, image_url };
+  return { name, description, category, price, stock, image_url };
 }
 
 function validateOrder(body) {
@@ -168,7 +192,30 @@ app.post('/api/auth/logout', (req, res) => {
 });
 
 app.get('/api/products', (req, res) => {
-  db.all('SELECT * FROM products ORDER BY id DESC', [], (err, rows) => {
+  const search = (req.query.search || '').toString().trim();
+  const category = (req.query.category || '').toString().trim();
+  const lowStockOnly = req.query.lowStock === '1';
+
+  const conditions = [];
+  const values = [];
+
+  if (search) {
+    conditions.push('(name LIKE ? OR description LIKE ? OR category LIKE ?)');
+    values.push(`%${search}%`, `%${search}%`, `%${search}%`);
+  }
+
+  if (category) {
+    conditions.push('category = ?');
+    values.push(category);
+  }
+
+  if (lowStockOnly) {
+    conditions.push('stock <= 5');
+  }
+
+  const whereClause = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+
+  db.all(`SELECT * FROM products ${whereClause} ORDER BY id DESC`, values, (err, rows) => {
     if (err) return res.status(500).json({ error: err.message });
     res.json(rows);
   });
@@ -187,8 +234,8 @@ app.post('/api/products', requireAdmin, (req, res) => {
   if (payload.error) return res.status(400).json({ error: payload.error });
 
   db.run(
-    'INSERT INTO products (name, description, price, stock, image_url) VALUES (?, ?, ?, ?, ?)',
-    [payload.name, payload.description, payload.price, payload.stock, payload.image_url],
+    'INSERT INTO products (name, description, category, price, stock, image_url) VALUES (?, ?, ?, ?, ?, ?)',
+    [payload.name, payload.description, payload.category, payload.price, payload.stock, payload.image_url],
     function (err) {
       if (err) return res.status(500).json({ error: err.message });
       db.get('SELECT * FROM products WHERE id = ?', [this.lastID], (err, row) => {
@@ -204,8 +251,8 @@ app.put('/api/products/:id', requireAdmin, (req, res) => {
   if (payload.error) return res.status(400).json({ error: payload.error });
 
   db.run(
-    'UPDATE products SET name = ?, description = ?, price = ?, stock = ?, image_url = ? WHERE id = ?',
-    [payload.name, payload.description, payload.price, payload.stock, payload.image_url, req.params.id],
+    'UPDATE products SET name = ?, description = ?, category = ?, price = ?, stock = ?, image_url = ? WHERE id = ?',
+    [payload.name, payload.description, payload.category, payload.price, payload.stock, payload.image_url, req.params.id],
     function (err) {
       if (err) return res.status(500).json({ error: err.message });
       if (this.changes === 0) return res.status(404).json({ error: 'Not found' });
@@ -222,6 +269,51 @@ app.delete('/api/products/:id', requireAdmin, (req, res) => {
     if (err) return res.status(500).json({ error: err.message });
     if (this.changes === 0) return res.status(404).json({ error: 'Not found' });
     res.json({ deleted: true });
+  });
+});
+
+app.post('/api/products/:id/restock', requireAdmin, (req, res) => {
+  const amount = Number(req.body?.amount);
+  if (!Number.isInteger(amount) || amount <= 0) {
+    return res.status(400).json({ error: 'Amount must be a whole number greater than 0' });
+  }
+
+  db.run(
+    'UPDATE products SET stock = stock + ? WHERE id = ?',
+    [amount, req.params.id],
+    function (err) {
+      if (err) return res.status(500).json({ error: err.message });
+      if (this.changes === 0) return res.status(404).json({ error: 'Not found' });
+      db.get('SELECT * FROM products WHERE id = ?', [req.params.id], (selectErr, row) => {
+        if (selectErr) return res.status(500).json({ error: selectErr.message });
+        res.json(row);
+      });
+    }
+  );
+});
+
+app.get('/api/stats', (req, res) => {
+  db.get('SELECT COUNT(*) AS totalProducts, COALESCE(SUM(stock), 0) AS totalInventory, SUM(CASE WHEN stock <= 5 THEN 1 ELSE 0 END) AS lowStockProducts FROM products', [], (productErr, productRow) => {
+    if (productErr) return res.status(500).json({ error: productErr.message });
+
+    db.get('SELECT COUNT(*) AS totalOrders, COALESCE(SUM(quantity), 0) AS totalUnitsOrdered FROM orders', [], (orderErr, orderRow) => {
+      if (orderErr) return res.status(500).json({ error: orderErr.message });
+
+      db.all('SELECT status, COUNT(*) AS count FROM orders GROUP BY status', [], (statusErr, statusRows) => {
+        if (statusErr) return res.status(500).json({ error: statusErr.message });
+
+        const ordersByStatus = statusRows.reduce((accumulator, item) => {
+          accumulator[item.status] = item.count;
+          return accumulator;
+        }, {});
+
+        res.json({
+          products: productRow,
+          orders: orderRow,
+          ordersByStatus
+        });
+      });
+    });
   });
 });
 

@@ -25,6 +25,7 @@ db.serialize(() => {
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
     description TEXT,
+    category TEXT NOT NULL DEFAULT 'General',
     price REAL NOT NULL,
     stock INTEGER NOT NULL DEFAULT 0,
     image_url TEXT,
@@ -50,50 +51,78 @@ db.serialize(() => {
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
 
-  db.run('DELETE FROM orders');
-  db.run('DELETE FROM products');
-
-  db.run('DELETE FROM users');
-
-  const products = db.prepare('INSERT INTO products (name, description, price, stock, image_url) VALUES (?, ?, ?, ?, ?)');
-  products.run('Canvas Sneakers', 'Lightweight everyday sneakers with a clean finish.', 59.99, 18, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80');
-  products.run('Leather Backpack', 'Durable commuter backpack with multiple compartments.', 89.5, 12, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=80');
-  products.run('Wireless Headphones', 'Noise-isolating headphones with 30-hour battery life.', 129.0, 25, 'https://images.unsplash.com/photo-1518441902117-f0a9d6b0bb58?auto=format&fit=crop&w=900&q=80');
-  products.finalize();
-
-  const admin = createPasswordRecord('admin123');
-  db.run('INSERT INTO users (username, password_salt, password_hash, role) VALUES (?, ?, ?, ?)', [
-    'admin',
-    admin.salt,
-    admin.password_hash,
-    'admin'
-  ]);
-
-  db.get('SELECT id FROM products ORDER BY id ASC LIMIT 1', [], (err, row) => {
+  db.all('PRAGMA table_info(products)', [], (err, columns) => {
     if (err) {
-      console.error('Seed verification failed', err.message);
+      console.error('Failed to inspect products table', err.message);
       process.exitCode = 1;
       db.close();
       return;
     }
 
-    if (row) {
-      db.run('INSERT INTO orders (customer_name, product_id, quantity, status) VALUES (?, ?, ?, ?)', [
-        'Ava Johnson',
-        row.id,
-        2,
-        'paid'
-      ]);
+    const hasCategory = columns.some((column) => column.name === 'category');
+    if (!hasCategory) {
+      db.run("ALTER TABLE products ADD COLUMN category TEXT NOT NULL DEFAULT 'General'", (alterErr) => {
+        if (alterErr) {
+          console.error('Failed to add category column', alterErr.message);
+          process.exitCode = 1;
+          db.close();
+          return;
+        }
+
+        seedData();
+      });
+      return;
     }
 
-    db.all('SELECT * FROM products', [], (productErr, productRows) => {
+    seedData();
+  });
+
+  function seedData() {
+    db.run('DELETE FROM orders');
+    db.run('DELETE FROM products');
+
+    db.run('DELETE FROM users');
+
+    const products = db.prepare('INSERT INTO products (name, description, category, price, stock, image_url) VALUES (?, ?, ?, ?, ?, ?)');
+    products.run('Canvas Sneakers', 'Lightweight everyday sneakers with a clean finish.', 'Footwear', 59.99, 18, 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80');
+    products.run('Leather Backpack', 'Durable commuter backpack with multiple compartments.', 'Accessories', 89.5, 12, 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=80');
+    products.run('Wireless Headphones', 'Noise-isolating headphones with 30-hour battery life.', 'Electronics', 129.0, 25, 'https://images.unsplash.com/photo-1518441902117-f0a9d6b0bb58?auto=format&fit=crop&w=900&q=80');
+    products.finalize();
+
+    const admin = createPasswordRecord('admin123');
+    db.run('INSERT INTO users (username, password_salt, password_hash, role) VALUES (?, ?, ?, ?)', [
+      'admin',
+      admin.salt,
+      admin.password_hash,
+      'admin'
+    ]);
+
+    db.get('SELECT id FROM products ORDER BY id ASC LIMIT 1', [], (productErr, row) => {
       if (productErr) {
         console.error('Seed verification failed', productErr.message);
         process.exitCode = 1;
-      } else {
-        console.log(`Seeded ${productRows.length} products into ${dbFile}`);
+        db.close();
+        return;
       }
-      db.close();
+
+      if (row) {
+        db.run('INSERT INTO orders (customer_name, product_id, quantity, status) VALUES (?, ?, ?, ?)', [
+          'Ava Johnson',
+          row.id,
+          2,
+          'paid'
+        ]);
+      }
+
+      db.all('SELECT * FROM products', [], (verifyErr, productRows) => {
+        if (verifyErr) {
+          console.error('Seed verification failed', verifyErr.message);
+          process.exitCode = 1;
+        } else {
+          console.log(`Seeded ${productRows.length} products into ${dbFile}`);
+        }
+        db.close();
+      });
     });
-  });
+  }
 });
