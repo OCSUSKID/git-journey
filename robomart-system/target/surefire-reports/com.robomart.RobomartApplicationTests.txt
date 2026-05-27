@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.robomart.RobomartApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.560 s <<< FAILURE! -- in com.robomart.RobomartApplicationTests
-com.robomart.RobomartApplicationTests -- Time elapsed: 0.560 s <<< ERROR!
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.477 s <<< FAILURE! -- in com.robomart.RobomartApplicationTests
+com.robomart.RobomartApplicationTests -- Time elapsed: 0.477 s <<< ERROR!
 org.springframework.beans.factory.BeanDefinitionStoreException: Incompatible class format in file [C:\Users\OKOROAFOR\Downloads\git-journey\robomart-system\target\test-classes\com\robomart\RobomartApplicationTests.class]: set system property 'spring.classformat.ignore' to 'true' if you mean to ignore such files during classpath scanning
 	at org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider.scanCandidateComponents(ClassPathScanningCandidateComponentProvider.java:504)
 	at org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider.findCandidateComponents(ClassPathScanningCandidateComponentProvider.java:351)
@@ -19,8 +19,8 @@ org.springframework.beans.factory.BeanDefinitionStoreException: Incompatible cla
 	at org.springframework.boot.test.context.SpringBootTestContextBootstrapper.buildTestContext(SpringBootTestContextBootstrapper.java:111)
 	at org.springframework.test.context.TestContextManager.<init>(TestContextManager.java:142)
 	at org.springframework.test.context.TestContextManager.<init>(TestContextManager.java:126)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.getTestContextManager(SpringExtension.java:366)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.beforeAll(SpringExtension.java:131)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.getTestContextManager(SpringExtension.java:363)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.beforeAll(SpringExtension.java:128)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
 Caused by: org.springframework.core.type.classreading.ClassFormatException: ASM ClassReader failed to parse class file - probably due to a new Java class file version that is not supported yet. Consider compiling with a lower '-target' or upgrade your framework version. Affected class: file [C:\Users\OKOROAFOR\Downloads\git-journey\robomart-system\target\test-classes\com\robomart\RobomartApplicationTests.class]
 	at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:59)
@@ -30,10 +30,10 @@ Caused by: org.springframework.core.type.classreading.ClassFormatException: ASM 
 	at org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider.scanCandidateComponents(ClassPathScanningCandidateComponentProvider.java:470)
 	... 17 more
 Caused by: java.lang.IllegalArgumentException: Unsupported class file major version 69
-	at org.springframework.asm.ClassReader.<init>(ClassReader.java:199)
+	at org.springframework.asm.ClassReader.<init>(ClassReader.java:200)
 	at org.springframework.asm.ClassReader.<init>(ClassReader.java:180)
 	at org.springframework.asm.ClassReader.<init>(ClassReader.java:166)
-	at org.springframework.asm.ClassReader.<init>(ClassReader.java:287)
+	at org.springframework.asm.ClassReader.<init>(ClassReader.java:288)
 	at org.springframework.core.type.classreading.SimpleMetadataReader.getClassReader(SimpleMetadataReader.java:56)
 	... 21 more
 

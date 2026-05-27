@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version>
+        <version>3.4.0</version>
         <relativePath/>
     </parent>
 
@@ -33,6 +33,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- Ensure ASM version supports Java 25 class file format -->
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>9.8</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -42,9 +48,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <!-- Temporary: compile to Java 21 classfile to avoid current framework/ASM parsing issues while running on JDK 25.
-                         Follow-up: upgrade Spring Boot/ASM so classfile version 69 (Java 25) is supported, then set to 25. -->
-                    <release>21</release>
+                    <release>25</release>
                 </configuration>
             </plugin>
             <plugin>
