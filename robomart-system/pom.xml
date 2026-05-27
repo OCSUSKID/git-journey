@@ -42,7 +42,9 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
                 <configuration>
-                    <release>25</release>
+                    <!-- Temporary: compile to Java 21 classfile to avoid current framework/ASM parsing issues while running on JDK 25.
+                         Follow-up: upgrade Spring Boot/ASM so classfile version 69 (Java 25) is supported, then set to 25. -->
+                    <release>21</release>
                 </configuration>
             </plugin>
             <plugin>
