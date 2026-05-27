@@ -1,0 +1,42 @@
+name: Java CI (Maven, JDK 25)
+
+on:
+  push:
+    branches: [ main, 'modernize/**' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: [25]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ matrix.java-version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: temurin
+          cache: maven
+
+      - name: Use Maven Wrapper
+        run: ./robomart-system/mvnw -v
+
+      - name: Build with Maven
+        run: |
+          ./robomart-system/mvnw -f robomart-system/pom.xml -B -DskipTests=true clean package
+
+      - name: Run tests
+        run: |
+          ./robomart-system/mvnw -f robomart-system/pom.xml test
+
+      - name: Archive test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: robomart-test-results
+          path: robomart-system/target/surefire-reports || true
