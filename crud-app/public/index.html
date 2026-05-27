@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CRUD App</title>
+  <style>
+    :root{--accent:#2563eb;--muted:#6b7280}
+    body{font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;max-width:900px;margin:28px auto;padding:0 18px;color:#111}
+    h1{color:var(--accent);margin-bottom:12px}
+    form{display:flex;gap:8px;margin-bottom:16px}
+    input[type=text]{flex:1;padding:10px;border:1px solid #e5e7eb;border-radius:6px}
+    button{padding:10px 14px;background:var(--accent);color:#fff;border:none;border-radius:6px;cursor:pointer}
+    button.secondary{background:#efefef;color:#111}
+    .item{border:1px solid #eef2ff;background:#fff;padding:12px;margin-bottom:10px;border-radius:8px;display:flex;justify-content:space-between;align-items:center}
+    .meta{color:var(--muted);font-size:12px;margin-top:6px}
+    .desc{color:#374151;margin-top:6px}
+    .controls button{margin-left:6px}
+    #list{margin-top:8px}
+  </style>
+</head>
+<body>
+  <h1>Simple CRUD</h1>
+
+  <form id="createForm">
+    <input id="name" type="text" placeholder="Name" required />
+    <input id="description" type="text" placeholder="Description" />
+    <button type="submit">Create</button>
+  </form>
+
+  <div id="list"></div>
+
+  <template id="itemTpl">
+    <div class="item">
+      <div>
+        <strong class="title"></strong>
+        <div class="meta"></div>
+        <div class="desc"></div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center" class="controls">
+        <button class="edit">Edit</button>
+        <button class="delete">Delete</button>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    const listEl = document.getElementById('list');
+    const tpl = document.getElementById('itemTpl');
+
+    async function fetchItems(){
+      const res = await fetch('/api/items');
+      const items = await res.json();
+      render(items);
+    }
+
+    function render(items){
+      listEl.innerHTML = '';
+      items.forEach(item => {
+        const node = tpl.content.cloneNode(true);
+        node.querySelector('.title').textContent = item.name;
+        node.querySelector('.meta').textContent = `#${item.id} — ${new Date(item.created_at).toLocaleString()}`;
+        node.querySelector('.desc').textContent = item.description || '';
+        node.querySelector('.delete').addEventListener('click', () => deleteItem(item.id));
+        node.querySelector('.edit').addEventListener('click', () => editItem(item));
+        listEl.appendChild(node);
+      });
+    }
+
+    async function deleteItem(id){
+      if(!confirm('Delete item?')) return;
+      await fetch(`/api/items/${id}`, { method: 'DELETE' });
+      fetchItems();
+    }
+
+    function editItem(item){
+      const newName = prompt('Name', item.name);
+      if (newName === null) return;
+      const newDesc = prompt('Description', item.description || '');
+      fetch(`/api/items/${item.id}`, { method: 'PUT', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ name: newName, description: newDesc }) })
+        .then(()=>fetchItems());
+    }
+
+    document.getElementById('createForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const description = document.getElementById('description').value.trim();
+      if(!name) return alert('Name required');
+      await fetch('/api/items', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ name, description }) });
+      document.getElementById('name').value = '';
+      document.getElementById('description').value = '';
+      fetchItems();
+    });
+
+    fetchItems();
+  </script>
+</body>
+</html>
